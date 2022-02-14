@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="js/koppen.js"></script>
+    <script src="js/trewartha.js"></script>
 </head>
 <body>
     <h1>Climate Over Time</h1>
@@ -25,5 +27,40 @@
         <option value="seattle">Seattle</option>
         <option value="stlouis">St. Louis</option>
     </select>
+    <button id="see-climate" onclick="printCity()">See Climate</button>
 </body>
+<script>
+    var city = document.getElementById("city-select").value
+
+    function printCity() {
+        city = document.getElementById("city-select").value
+        console.log(city + " selected")
+        loadTable(tableify(city))
+    }
+
+    function tableify(city) {
+        return "data/" + city + ".json"
+    }
+
+    function loadTable(table) {
+        const request = new XMLHttpRequest;
+
+        request.open("get", table)
+        request.onload = () => {
+            const json = JSON.parse(request.responseText)
+            generateClimateList(json, table)
+        }
+
+        request.send()
+    }
+
+    function generateClimateList(json, table) { // very much placeholder for now
+        console.log(json)
+        /*for (year) { 
+            console.log(year.koppen)
+        }*/
+        console.log("generateClimateList() reached")
+    }
+
+</script>
 </html>
